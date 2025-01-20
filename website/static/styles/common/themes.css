@@ -1,0 +1,134 @@
+body.dark-theme {
+    background-color: #18191A;
+    color: #f0f0f0;
+}
+
+/* Light theme */
+
+body.light-theme {
+    background-color: #E7E6E5;
+    color: black;
+}
+
+body.light-theme .groups-container,
+body.light-theme .chats-container,
+body.light-theme .settings-container,
+body.light-theme .profile-settings-container,
+body.light-theme .appearance-settings-container,
+body.light-theme .modal-content,
+body.light-theme .right-bar,
+body.light-theme .incoming-friend-requests-container,
+body.light-theme .outgoing-friend-requests-container,
+body.light-theme .friends-list,
+body.light-theme .notifications-container,
+body.light-theme .group-input,
+body.light-theme .group-message-input {
+    background-color: #CECECE;
+    color: black;
+}
+
+body.light-theme .chat-user-header,
+body.light-theme .chat-user-info,
+body.light-theme .chat-menu-bio-container,
+body.light-theme .group-menu-header,
+body.light-theme .group-menu-info,
+body.light-theme .group-menu-description-container,
+body.light-theme .group-menu-members,
+body.light-theme .group-menu-options {
+    background-color: #DADADA;
+    color: black;
+}
+
+body.light-theme .title-container {
+    color: black;
+}
+
+body.light-theme .chat-details h3,
+body.light-theme .group-details h3 {
+    color: black;
+}
+
+body.light-theme .chat-details p,
+body.light-theme .group-details p,
+body.light-theme #chat-menu-phone,
+body.light-theme .chat-menu-bio-container h3
+body.light-theme .group-menu-description-container h3 {
+    color: #585858;
+}
+
+body.light-theme .chat-item:hover,
+body.light-theme .chat-item.selected,
+body.light-theme .group-item:hover,
+body.light-theme .group-item.selected {
+    background-color: #D5D5D5;
+}
+
+body.light-theme .chat-header,
+body.light-theme .group-header {
+    background-color: #CECECE;
+}
+
+body.light-theme .chat-messages,
+body.light-theme .group-messages {
+    background-color: #D5D5D5;
+}
+
+body.light-theme .chat-messages .message.received,
+body.light-theme .group-messages .message.received {
+    background-color: #C4C4C4;
+}
+
+body.light-theme .message.received .message-text {
+    color: black;
+}
+
+body.light-theme .chat-input {
+    background-color: #CECECE;
+}
+
+body.light-theme .chat-input input[type="text"],
+body.light-theme .group-input input[type="text"] {
+    background-color: #BDBDBD;
+    color: black;
+}
+
+body.light-theme .message-settings-menu {
+    background-color: #BDBDBD;
+    color: black;
+}
+
+body.light-theme .settings-nav a {
+    color: black;
+}
+
+body.light-theme .setting-icon,
+body.light-theme .setting-section-icon,
+body.light-theme .chat-user-menu-icon,
+body.light-theme .group-menu-icon,
+body.light-theme .close-modal-icon,
+body.light-theme .edit-icon,
+body.light-theme .chat-settings-icon,
+body.light-theme .group-settings-icon {
+    color: #353738;
+}
+
+body.light-theme .setting-section-icon:hover,
+body.light-theme .close-modal-icon:hover,
+body.light-theme .edit-icon:hover,
+body.light-theme .chat-settings-icon:hover
+body.light-theme .group-settings-icon:hover
+body.light-theme .group-menu-icon:hover {
+    color: #505050;
+}
+
+body.light-theme #group-menu-members-count {
+    color: #585858;
+}
+
+body.light-theme #add-members-modal .member-button {
+    color: black;
+}
+
+body.light-theme #add-members-modal .selected {
+    background-color: #DADADA;;
+}
