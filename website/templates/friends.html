@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="friends-container">
+    <!-- Incoming Friend Requests -->
+    <div class="incoming-friend-requests-container">
+        <h3>Incoming Friend Requests</h3>
+        <ul class="incoming-requests">
+            {% for request in incoming_requests %}
+                <li class="incoming-friend-requests-list">
+                    <img id="friend-profile-picture" src="{{ url_for('static', filename='profile_pics/' + (request.user_1.profile_picture or 'default.png')) }}">
+                    <div class="incoming-friend-info">
+                        <p>{{ request.user_1.name }}</p>
+                        <div class="incoming-requests-buttons-container">
+                            <form action="{{ url_for('friendship.accept_request', friendship_id=request.id) }}" method="POST" style="display: inline;">
+                                <button type="submit" id="accept-button">
+                                    Accept
+                                </button>
+                            </form>
+                            <form action="{{ url_for('friendship.reject_request', friendship_id=request.id) }}" method="POST" style="display: inline;">
+                                <button type="submit" id="decline-button">
+                                    Decline
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Outgoing Friend Requests -->
+    <div class="outgoing-friend-requests-container">
+        <ul class="pending-requests">
+            <h3>Outgoing friend requests</h3>
+            {% for friendship in outgoing_requests %}
+                {% if friendship.user_2 != current_user %}
+                    {% set recipient = friendship.user_2 %}
+                {% else %}
+                    {% set recipient = friendship.user_1 %}
+                {% endif %}
+                <li class="outgoing-friend-requests-list">
+                    <img id="friend-profile-picture" src="{{ url_for('static', filename='profile_pics/' + (recipient.profile_picture or 'default.png')) }}">
+                    <p>{{ recipient.name }}</p>
+                    <form action="{{ url_for('friendship.cancel_request', friendship_id=friendship.id) }}" method="POST" id="cancel-friend-form">
+                        <button type="submit" id="friend-cancel-button" data-tooltip="Cancel request">
+                            <i class='bx bx-x close-modal-icon'></i>
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <h3>Add Friend</h3>
+        <form action="{{ url_for('friendship.add_friend') }}" method="POST" id="add-friend-form">
+            <input type="text" name="friend_id" placeholder="Enter Friend ID" required>
+            <button type="submit" data-tooltip="Send request">
+                <i class='bx bxs-send send-icon'></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Friends List -->
+    <div class="friends-list">
+        <h3>Your Friends</h3>
+        <ul class="user-friends">
+            {% for friendship in friendships %}
+                {% if friendship.user_1 != current_user %}
+                    {% set friend = friendship.user_1 %}
+                {% else %}
+                    {% set friend = friendship.user_2 %}
+                {% endif %}
+                <li class="user-friends-item">
+                    <div class="friend-info">
+                        <img id="friend-profile-picture" src="{{ url_for('static', filename='profile_pics/' + (friend.profile_picture or 'default.png')) }}">
+                        <span id="status-circle-{{ friend.user_id }}" 
+                            class="status-circle {{ 'online' if friend.status == 'online' else 'offline' }}" 
+                            title="User status"></span>
+                        <div class="friend-name">
+                            <h4>{{ friend.name }}</h4>
+                            <p>{{ friend.status }}</p>
+                        </div>
+                    </div>
+                    <div class="user-friends-item-buttons-container ">
+                        <form action="{{ url_for('friendship.remove_friend', friendship_id=friendship.id) }}" method="POST">
+                            <button type="submit" class="btn btn-danger btn-sm" data-tooltip="Remove">
+                                <i class='bx bxs-minus-circle remove-icon'></i>                            </button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+<script src="{{ url_for('static', filename='scripts/friend.js') }}"></script>
+{% endblock %}
