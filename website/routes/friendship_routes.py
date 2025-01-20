@@ -1,3 +1,27 @@
+"""
+Module that contains the friendship routes for the ChatFlow application.
+
+Routes:
+    - POST /add_friend: Sends a friend request to another user.
+        Validates if the user exists, prevents sending requests to oneself,
+        checks if the recipient allows requests,
+            and handles existing friendships.
+    - POST /cancel_request/<friendship_id>: Cancels a pending friend request.
+        Ensures the request belongs to the current user and is still pending.
+    - POST /accept_request/<friendship_id>: Accepts a pending friend request.
+        Validates the friendship request and updates the status to accepted.
+        Sends notifications to both the requesting user and the receiver.
+    - POST /reject_friend_request/<friendship_id>:
+        Rejects a pending friend request.
+            Validates if the friendship exists,
+            ensures the current user is the recipient of the request,
+    - POST /remove_friend/<friendship_id>:
+            Removes a friend from the user's friend list.
+    - GET /friends: Displays the list of all users excluding the current user
+    - GET /api/friends: Returns a JSON response
+        containing a list of the current user's friends,
+        excluding those with whom the user has an existing chat.
+"""
 from flask import (
     Blueprint, request, redirect, url_for, flash, jsonify, render_template)
 from flask_login import login_required, current_user
