@@ -1,0 +1,40 @@
+/* Tooltip styles for both left-bar links and middle-bar buttons */
+.left-bar a[data-tooltip],
+.middle-bar button[data-tooltip] {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.left-bar a[data-tooltip]::after,
+.middle-bar button[data-tooltip]::after {
+    content: attr(data-tooltip);  /* Displays the tooltip text from the data-tooltip attribute */
+    position: absolute;
+    top: 50%;  /* Vertically center the tooltip */
+    transform: translateY(-50%);  /* Adjust vertical positioning */
+    background-color: white;
+    color: #313131;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+.left-bar a[data-tooltip]::after {
+    left: 90%;
+}
+
+.middle-bar button[data-tooltip]::after {
+    right: 120%;
+}
+
+/* Show tooltip when hovering over the element */
+.left-bar a[data-tooltip]:hover::after,
+.middle-bar button[data-tooltip]:hover::after {
+    visibility: visible;
+    opacity: 1;
+}
