@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block title %}ChatFlow - Dashboard{% endblock %}
+
+{% block content %}
+
+    <section class="left-bar">
+
+        <div id="user-image-container" href="#">
+            <img id="user-image" 
+                 src="{{ url_for('static', filename='profile_pics/' + (current_user.profile_picture or 'default.png')) }}" 
+                 alt="User's Profile Picture">
+        </div>
+
+        <a href="{{ url_for('main_routes_bp.home') }}" data-tooltip="Home">
+            <img src="{{ url_for('static', filename='icons/home.png') }}">
+        </a>
+        <a href="#" data-tooltip="Notifications">
+            <img src="{{ url_for('static', filename='icons/bell.png') }}">
+            {% if unread_notifications > 0 %}
+            <div class="notifications-unread-indicator">
+                <span class="unread-count">{{ unread_notifications }}</span>
+            </div>
+            {% endif %}
+        </a>
+        <a href="#" data-tooltip="Friends">
+            <img src="{{ url_for('static', filename='icons/friends.png') }}">
+        </a>
+        <a href="#" id="settings-icon" data-tooltip="Settings">
+            <img src="{{ url_for('static', filename='icons/settings.png') }}">
+        </a>        
+        <a id="logout-button" href="{{ url_for('authentication.logout')}}" data-tooltip="Logout">
+            <img src="{{ url_for('static', filename='icons/logout.png') }}">
+        </a>
+    </section>
+
+    <section class="middle-bar">
+        <div class="groups-container">
+            <div class="title-container">
+                <h2>Groups</h2>
+                <button class="add-button" onclick="openCreateGroupModal()" data-tooltip="Create group">
+                    <img src="{{ url_for('static', filename='icons/create.png') }}">
+                </button>
+            </div>
+            <div class="groups-list" id="groups-list">
+                {% for group in groups %}
+                    <div class="group-item" onclick="selectGroup('{{ group.id }}')">
+                        <img src="{{ url_for('static', filename='group_pics/' + (group.group_image if group.group_image else 'default_group.png')) }}"  srcset="photo@2x.png 2x" alt="Group Picture">
+                        <span>{{ group.group_name }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>        
+        <div class="chats-container" id="chats-container">
+            <div class="title-container">
+                <h2>Chats</h2>
+                <button class="add-button" onclick="openCreateChatModal()" data-tooltip="Create chat">
+                    <img src="{{ url_for('static', filename='icons/create.png') }}">
+                </button>
+            </div>
+            <div class="chats-list" id="chats-list">
+                {% for private_chat in private_chats %}
+                    <div class="chat-item" data-conversation-id="{{ private_chat.id }}" onclick="selectChat('{{ private_chat.id }}')">
+                        <img src="{{ private_chat.profile_picture_url }}" class="chat-icon" alt="Profile Picture" />
+                        <div class="chat-details">
+                            <h3>{{ private_chat.name }}</h3>
+                            <p>{{ private_chat.last_message }}</p>
+                            {% if private_chat.last_message_date %}
+                                <span class="chat-date" id="chat-date-{{ private_chat.id }}" data-last-message-date="{{ private_chat.last_message_date }}">
+                                    {{ private_chat.last_message_date }}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% if private_chat.unread_messages > 0 %}
+                            <div class="unread-indicator">
+                                <span class="unread-count">{{ private_chat.unread_messages }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+        </div>          
+    </section>
+
+    <section class="right-bar">
+        {% for private_chat in private_chats %}
+        <div class="chat-window" id="chat-window-{{ private_chat.id }}" style="display: none;" data-conversation-id="{{ private_chat.id }}">
+            <div class="chat-header">
+                <div class="chat-info">
+                    <img id="chat-profile-pic" src="{{ private_chat.profile_picture_url }}" alt="Chat User Profile Picture" class="user-pfp">
+                    <div class="chat-details">
+                        <h3 id="chat-title">{{ private_chat.name }}</h3>
+                        <p id="chat-status">
+                            {% if private_chat.status == 'online' %}
+                                Online
+                            {% else %}
+                                Last seen: {{ private_chat.last_seen }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            <a href="#" id="chat-settings-{{ private_chat.id }}", class="chat-settings">
+                <i class='bx bx-dots-horizontal-rounded chat-settings-icon'></i>
+            </a>
+            </div>
+            <div class="chat-messages" id="chat-messages-{{ private_chat.id }}"></div>
+            <div class="chat-input">
+                <input type="text" id="message-input-{{ private_chat.id }}" placeholder="Type a message" />
+                <button class="send-button" 
+                    data-conversation-id="{{ private_chat.id }}" 
+                    data-sender-id="{{ current_user.id }}" 
+                    data-receiver-id="{{ private_chat.receiver_id }}" 
+                    onclick="sendMessage('{{ private_chat.id }}')">
+                    Send
+                </button>
+            </div>
+        </div>
+        <div class="chat-user-menu" data-conversation-id="{{ private_chat.id }}">
+            <div class="chat-user-header">
+                <a href="#">
+                    <i class='bx bx-x chat-user-menu-icon'></i>
+                </a>
+                <h3>Contact info</h3>
+            </div>
+            <div class="chat-user-info">
+                <img id="chat-menu-profile-pic" src="{{ private_chat.profile_picture_url }}" alt="Chat User Profile Picture">
+                <h1 id="chat-menu-name">{{ private_chat.name }}</h1>
+                <p id="chat-menu-phone">{{ private_chat.phone_number }}</p>
+            </div>
+            <div class="chat-menu-bio-container">
+                <h3>About</h3>
+                <p class="chat-menu-bio">{{ private_chat.bio }}</p>
+                <h3>Birth date</h3>
+                <p class="chat-menu-birthdate">{{ private_chat.birthdate }}</p>
+                <h3>Location</i></h3>
+                <p class="chat-menu-location">{{ private_chat.location }}</p>
+                <h3>Job title</h3>
+                <p class="chat-menu-bio">{{ private_chat.job_title }}</p>
+                <h3>Social links</h3>
+                <div class="social-links">
+                    {% if private_chat.facebook_link %}
+                        <a href="{{ private_chat.facebook_link }}" target="_blank" title="Facebook">
+                            <i class='bx bxl-facebook social-icon'></i>
+                        </a>
+                    {% endif %}
+                    {% if private_chat.discord_id %}
+                        <a href="https://discord.com/users/{{ private_chat.discord_id }}" target="_blank" title="Discord">
+                            <i class="bx bxl-discord-alt social-icon"></i>
+                        </a>
+                    {% endif %}
+                    {% if private_chat.github_link %}
+                        <a href="{{ private_chat.github_link }}" target="_blank" title="GitHub">
+                            <i class="bx bxl-github social-icon"></i>
+                        </a>
+                    {% endif %}
+                    {% if private_chat.youtube_link %}
+                        <a href="{{ private_chat.youtube_link }}" target="_blank" title="YouTube">
+                            <i class="bx bxl-youtube social-icon"></i>
+                        </a>
+                    {% endif %}
+                    {% if private_chat.website_link %}
+                        <a href="{{ private_chat.website_link }}" target="_blank" title="Website">
+                            <i class="bx bx-globe social-icon"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% for group in groups %}
+        <div class="group-window" id="group-window-{{ group.id }}" style="display: none;">
+            <div class="group-header">
+                <div class="group-info">
+                    <img id="group-profile-pic" src="{{ url_for('static', filename='group_pics/' + (group.group_image if group.group_image else 'default_group.png')) }}" alt="Group Picture" class="group-pfp">
+                    <div class="group-details">
+                        <h3 id="group-title">{{ group.group_name }}</h3>
+                        <p id="group-status">{{ group.group_members.count() }} Member{% if group.group_members.count() > 1 %}s{% endif %}</p>
+                    </div>
+                </div>
+                <a href="#" id="group-settings-{{ group.id }}" class="group-settings">
+                    <i class='bx bx-dots-horizontal-rounded group-settings-icon'></i>
+                </a>
+                <div class="group-settings-menu">
+                    <ul>
+                        <li class="group-info">Group info</li>
+                        <li class="view-members">Members</li>
+                        <li class="leave-group">Leave group</li>
+                        <li class="delete-group">
+                            <form action="/group/delete/{{ group.id }}" method="POST">
+                                <button type="submit">Delete Group</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="group-messages" id="group-messages-{{ group.id }}"></div>
+            <div class="group-input">
+                <input type="text" id="group-message-input-{{ group.id }}" class="group-message-input" placeholder="Type a message" />
+                <button class="send-button-group" 
+                    data-group-id="{{ group.id }}" 
+                    data-sender-id="{{ current_user.id }}"
+                    onclick="sendGroupMessage('{{ group.id }}')">
+                    Send
+                </button>
+            </div>
+        </div>
+        <div class="group-menu" data-conversation-id="{{ group.id }}">
+            <div class="group-menu-header">
+                <a href="#">
+                    <i class='bx bx-x group-menu-icon'></i>
+                </a>
+                <h3>Group info</h3>
+            </div>
+            <div class="group-menu-info">
+                <img id="group-menu-profile-pic" 
+                        src="{{ url_for('static', filename='group_pics/' + (group.group_image or 'default_group.png')) }}" 
+                        alt="Group Image">
+                <h1 id="group-menu-name">{{ group.group_name }}</h1>
+                <p id="group-menu-members-count">{{ group.group_members.count() }} Member{% if group.group_members.count() > 1 %}s{% endif %}</p>
+                <p>{{ group.group_members.name }}</p>
+            </div>
+            <div class="group-menu-description-container">
+                <h3>About</h3>
+                <p class="group-menu-bio">{{ group.group_description }}</p>
+                <h3>Created On</h3>
+                <p class="group-menu-creation-date">{{ group.created_at }}</p>
+            </div>
+            <div class="group-menu-members">
+                <div class="add-member">
+                    <h3>Add member</h3>
+                    <button onclick="openAddMembersModal('{{ group.id }}')">
+                        <img src="{{ url_for('static', filename='icons/create.png') }}">
+                    </button>
+                </div>
+                <h3>Members</h3>
+                <ul class="group-members-list">
+                    {% for member in group.group_members %}
+                        <li class="group-member">
+                            <div class="member-info">
+                                <img src="{{ url_for('static', filename='profile_pics/' + (member.user.profile_picture if member.user.profile_picture else 'default.png')) }}" alt="Member Picture" class="member-profile-pic">
+                                <p class="member-name">
+                                    {% if member.user.id == current_user.id %}
+                                        {{ member.user.name }} (You)
+                                    {% else %}
+                                        {{ member.user.name }}
+                                    {% endif %}
+                                </p>
+                                <span id="member-role">
+                                    {{ member.role }}
+                                </span>
+                                {% if group.owner_id == current_user.id and member.role != 'owner' %}
+                                    <a href="#" class="kick-member" onclick="kickMember('{{ group.id }}', '{{ member.user.id }}')" data-tooltip="Kick member">
+                                        <i class='bx bx-x kick-member-icon'></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>            
+            </div>
+            <div class="group-menu-options">
+                <ul>
+                    {% if group.owner_id != current_user.id %}
+                    <li class="leave-group">
+                        <button id="leaveGroupButton" class="" onclick="leaveGroup('{{ group.id }}')">
+                            <i class='bx bxs-log-out leave-group-icon leave-group-icon'></i>
+                            Leave Group
+                        </button>
+                    </li>
+                    {% endif %}
+                    {% if group.owner_id == current_user.id %}
+                    <li class="delete-group">
+                        <form action="/group/delete/{{ group.id }}" method="POST">
+                            <button type="submit">
+                                <i class="fa-solid fa-triangle-exclamation delete-group-icon"></i>
+                                Delete Group
+                            </button>
+                        </form>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </section>
+
+
+
+
+
+
+    <div id="create-group-modal" class="modal">
+        <div class="modal-content">
+            <h2>Create Group</h2>
+            <form id="create-group-form" method="POST" action="/group/create" enctype="multipart/form-data">
+                <label for="group-name">Group Name</label>
+                <input type="text" id="group-name" name="group_name" required>
+    
+                <label for="group-description">Group Description</label>
+                <textarea id="group-description" name="group_description"></textarea>
+
+                <label for="group_image">Group Image (Optional)</label>
+                <input type="file" id="group_image" name="group_image" class="form-control-file" accept="image/*">
+
+                <button id="submit-button" type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="add-members-modal" class="modal" data-group-id="">
+        <button id="cancel-button" type="button" onclick="closeAddMemberModal('create-group-modal')">
+            <i class='bx bx-x close-modal-icon'></i>
+        </button>
+        <div class="modal-content">
+          <h2>Add Members to Group</h2>
+          <div id="member-selection-container">
+            <!-- Friends list will load here -->
+          </div>
+          <button id="confirm-add-members" class="confirm-button">Add</button>
+        </div>
+      </div>
+
+      <div id="create-chat-modal" class="modal">
+        <div class="modal-content">
+            <button id="cancel-button" type="button" onclick="closeCreateChatModal('create-chat-modal')">
+                <i class='bx bx-x close-modal-icon'></i>
+            </button>
+            <h2>Add Chat</h2>
+            <div id="friend-list-container">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
