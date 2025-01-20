@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="profile-settings-container">
+  <div class="settings-head">
+      <a href="#" id="back-to-settings">
+          <i class='bx bx-arrow-back setting-section-icon'></i>
+      </a>
+      <h2>Privacy settings</h2>
+  </div>
+
+  <form id="privacy-form" action="{{ url_for('user_routes_bp.update_privacy_settings') }}" method="POST">
+    <div class="privacy-menu">
+        <div class="friend privacy">
+            <h3>Allow friend requests</h3>
+            <label class="switch">
+                <input type="checkbox" name="allow_friend_requests" {% if user.allow_friend_requests %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="phone privacy">
+            <h3>Hide phone number</h3>
+            <label class="switch">
+                <input type="checkbox" name="phone_number_is_private" {% if user.phone_number_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="last-seen privacy">
+            <h3>Hide last seen</h3>
+            <label class="switch">
+                <input type="checkbox" name="last_seen_is_private" {% if user.last_seen_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="bio privacy">
+            <h3>Hide bio</h3>
+            <label class="switch">
+                <input type="checkbox" name="bio_is_private" {% if user.bio_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="birthdate privacy">
+            <h3>Hide birthdate</h3>
+            <label class="switch">
+                <input type="checkbox" name="birthdate_is_private" {% if user.birthdate_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="location privacy">
+            <h3>Hide location</h3>
+            <label class="switch">
+                <input type="checkbox" name="location_is_private" {% if user.location_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="job-title privacy">
+            <h3>Hide job title</h3>
+            <label class="switch">
+                <input type="checkbox" name="job_title_is_private" {% if user.job_title_is_private %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <button id="submit-button" type="submit">Save</button>
+</form>
+
+
+</section>
+{% endblock %}
