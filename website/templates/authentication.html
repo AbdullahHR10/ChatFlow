@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}ChatFlow - Authentication{% endblock %}
+{% block content %}
+    <section class="auth-container">
+        <div class="auth-section" id="login-section">
+            <h2>Login</h2>
+            <form action="{{ url_for('authentication.login') }}" method="POST">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" id="phone_number" name="phone_number" required placeholder="Enter your phone Number">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <button type="submit">Login</button>
+            </form>
+            <p>Dont have an account?</p>
+            <a class="btn-donate" id="switch-to-signup">Sign up</a>
+        </div>
+
+        <div class="auth-section" id="signup-section" style="display: none; order: 1;">
+            <h2>Sign Up</h2>
+            <form action="{{ url_for('authentication.sign_up') }}" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+                <label for="signup_phone_number">Phone Number</label>
+                <input type="tel" id="signup_phone_number" name="phone_number" required placeholder="Enter your phone number">
+                <label for="signup_password">Password</label>
+                <input type="password" id="signup_password" name="password" required placeholder="Enter your password">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm your password">
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account?</p>
+            <a class="btn-donate" id="switch-to-login">Log in</a>
+        </div>
+    </section>
+{% endblock %}
