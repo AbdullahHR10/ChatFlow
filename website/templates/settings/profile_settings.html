@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="profile-settings-container">
+    <div class="settings-head">
+        <a href="#" id="back-to-settings">
+            <i class='bx bx-arrow-back setting-section-icon'></i>
+        </a>
+        <h2>Profile settings</h2>
+    </div>
+    <button type="submit" class="btn" onclick="openModal()" id="profile-settings-image-container">
+        <i class='bx bxs-pencil edit-pfp-icon'></i>
+        <img id="profile-settings-user-image" 
+             src="{{ url_for('static', filename='profile_pics/' + (current_user.profile_picture or 'default.png')) }}" 
+             alt="User's Profile Picture">
+    </button>
+    <div class="profile-menu">
+        <h6>Name</h6>
+        <div class="editable-container">
+            <h3 id="editable-username">
+                {{ user.name }}
+            </h3>
+            <a href="#" data-tooltip="Edit Name" onclick="enableEditing('editable-username', 'name')">
+                <i class='bx bxs-pencil edit-icon'></i>
+            </a>
+        </div>
+        <h6>Bio</h6>
+        <div class="editable-container">
+            <p id="editable-bio">
+                {{ user.bio }}
+            </p>
+            <a href="#" data-tooltip="Edit Bio" onclick="enableEditing('editable-bio', 'bio')">
+                <i class='bx bxs-pencil edit-icon'></i>
+            </a>
+        </div>
+        <h6>Friend id</h6>
+        <div class="editable-container">
+            <p>{{ user.friend_id }}</p>
+            <a data-tooltip="Your unique friend ID that others can use to find you.">
+                <i class='bx bx-question-mark question-icon'></i>
+            </a>
+        </div>
+        <h6>Birth date</h6>
+        <div class="editable-container">
+            <p id="editable-birthdate" style="display: block;">{{ user.birthdate }}</p>
+            <input type="date" id="edit-birthdate" style="display: none;" value="{{ user.birthdate }}" onchange="saveUpdatedField('birthdate')">
+            <a href="#" data-tooltip="Edit Birthdate" onclick="toggleEdit('editable-birthdate', 'edit-birthdate')">
+                <i class='bx bxs-pencil edit-icon'></i>
+            </a>
+        </div>
+        <h6>Location</h6>
+        <div class="editable-container">
+            <p id="editable-location">{{ user.location }}</p>
+            <a href="#" data-tooltip="Edit Name" onclick="enableEditing('editable-location', 'location')">
+                <i class='bx bxs-pencil edit-icon'></i>
+            </a>
+        </div>
+        <h6>Job title</h6>
+        <div class="editable-container">
+            <p id="editable-job_title">{{ user.job_title }}</p>
+            <a href="#" data-tooltip="Edit Name" onclick="enableEditing('editable-job_title', 'job_title')">
+                <i class='bx bxs-pencil edit-icon'></i>
+            </a>
+        </div>
+        <h6>Social links</h6>
+        <div class="social-links-container">
+            <div class="editable-container">
+                <label for="edit-facebook">Facebook</label>
+                <input
+                    type="url"
+                    id="edit-facebook"
+                    value="{{ user.facebook_link if user.facebook_link else '' }}"
+                    placeholder="https://facebook.com/profile"
+                    onchange="updateField('facebook_link', this.value)"
+                />
+            </div>
+            <div class="editable-container">
+                <label for="discord-id">Discord</label>
+                <input
+                    type="text"
+                    id="edit-discord"
+                    value="{{ user.discord_id if user.discord_id else '' }}"
+                    placeholder="{{ user.discord_id if user.discord_id else 'username#1234' }}"
+                    onchange="updateField('discord_id', this.value)"
+                />
+            </div>
+            <div class="editable-container">
+                <label for="edit-github">Facebook</label>
+                <input
+                    type="url"
+                    id="edit-github"
+                    value="{{ user.github_link if user.github_link else '' }}"
+                    placeholder="https://github.com/profile"
+                    onchange="updateField('github_link', this.value)"
+                />
+            </div>
+            <div class="editable-container">
+                <label for="edit-youtube">Youtube</label>
+                <input
+                    type="url"
+                    id="edit-youtube"
+                    value="{{ user.youtube_link if user.youtube_link else '' }}"
+                    placeholder="https://www.youtube.com/channel"
+                    onchange="updateField('youtube_link', this.value)"
+                />
+            </div>
+            <div class="editable-container">
+                <label for="edit-website">Website</label>
+                <input
+                    type="url"
+                    id="edit-website"
+                    value="{{ user.website_link if user.website_link else '' }}"
+                    placeholder=""
+                    onchange="updateField('website_link', this.value)"
+                />
+            </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2>Upload Profile Picture</h2>
+            <form id="upload-form" action="/upload_profile_picture" method="POST" enctype="multipart/form-data">
+                <label for="file-input">Choose a profile picture (PNG, JPG, JPEG):</label>
+                <input type="file" name="file" id="file-input" accept="image/png, image/jpeg" required>
+    
+                <div class="image-preview-container">
+                    <img id="image-preview" src="" alt="Image Preview" style="display: none;">
+                </div>
+    
+                <button type="submit" id="save-button">Save</button>
+                <button id="cancel-button" type="button" onclick="closeModal()">
+                    <i class='bx bx-x close-modal-icon'></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+</section>
+
+{% endblock %}
