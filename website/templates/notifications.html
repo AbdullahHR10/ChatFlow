@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="notifications-container">
+    <h3>Your Notifications</h3>
+    {% if notifications %}
+        <ul class="notifications-list">
+            {% for notification in notifications %}
+                <li class="notification-item{% if not notification.is_read %} unread{% endif %}">
+                    <div class="notification-info">
+                        <p id="notification-message">{{ notification.message }}</p>
+                        <p id="notification-timestamp" data-timestamp="{{ notification.timestamp }}"></p>
+                    </div>
+                    {% if not notification.is_read %}
+                        <button class="mark-read" data-id="{{ notification.id }}" data-tooltip="Mark as read">
+                            <i class="fa-solid fa-circle mark-read-icon"></i>
+                        </button>
+                    {% else %}
+                        <button class="delete-notification" data-id="{{ notification.id }}" data-tooltip="Delete notification">
+                            <i class="fa-solid fa-trash notification-delete-icon"></i>
+                        </button>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p id="no-notifications">You have no notifications.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
