@@ -1,0 +1,235 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #313131;
+    color: white;
+    margin: 5% auto;
+    box-shadow: 0 3px 3px #0061CF;
+    border-radius: 1rem;
+    width: 80%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#cancel-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+}
+
+#cancel-button:hover {
+    cursor: pointer;
+}
+
+#cancel-button img {
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+}
+
+.modal-content h2 {
+    padding: 1rem;
+}
+
+#friend-list-container p {
+    margin: 1rem;
+}
+
+.friend-button {
+    display: flex;
+    align-items: center;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 1rem;
+    width: 100%;
+    border-bottom: 1px solid #8696A026;
+}
+
+.friend-button:hover {
+    background-color: #2C2C2C;
+}
+
+.friend-button:last-child {
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.modal-friend-pfp {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.modal-body {
+    margin-bottom: 15px;
+}
+
+.modal-footer {
+    text-align: right;
+}
+
+#create-group-form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+#create-group-form label {
+    margin-bottom: 0.5rem;
+}
+
+#create-group-form input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    height: 2rem;
+    border-radius: 10px;
+}
+
+#group-description {
+    height: 6rem;
+    padding: 0.5rem;
+}
+
+#submit-button,
+#confirm-add-members {
+    --clr-font-main: hsla(0, 0%, 20%, 1);
+    --btn-bg-1: hsla(194, 100%, 69%, 1);
+    --btn-bg-2: hsla(217, 100%, 56%, 1);
+    --btn-bg-color: hsla(360, 100%, 100%, 1);
+    --radii: 0.5em;
+    cursor: pointer;
+    padding: 0.9em 1.4em;
+    height: 3rem;
+    width: 6rem;
+    font-size: var(--size, 1rem);
+    font-weight: 500;
+    transition: background-position 0.8s ease;
+    background-size: 280% auto;
+    background-image: linear-gradient(
+        325deg,
+        var(--btn-bg-2) 0%,
+        var(--btn-bg-1) 55%,
+        var(--btn-bg-2) 90%
+    );
+    border: none;
+    border-radius: var(--radii);
+    color: var(--btn-bg-color);
+    box-shadow:
+        0px 0px 20px rgba(71, 184, 255, 0.5),
+        0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+        inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+        inset -4px -4px 8px rgba(19, 95, 216, 0.35);
+    margin: 2rem 0 2rem 0;
+    align-self: center;
+}
+
+#submit-button:hover,
+#confirm-add-members:hover {
+    background-position: right top;
+}
+
+#submit-button:is(:focus, :focus-visible, :active),
+#confirm-add-members:is(:focus, :focus-visible, :active) {
+    outline: none;
+    box-shadow:
+        0 0 0 3px var(--btn-bg-color),
+        0 0 0 6px var(--btn-bg-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #submit-button {
+        transition: none;
+    }
+    #confirm-memebers-button {
+        transition: none;
+    }
+}
+
+#member-selection-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.member-button img {
+    height: 50px;
+    width: 50px;
+}
+
+.member-button:hover {
+    cursor: pointer;
+}
+
+#add-members-modal .member-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    background: none;
+    padding: 1rem 1rem 1rem 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #8696A026;
+    color: white;
+}
+
+#add-members-modal .member-button:last-child {
+    border-bottom: none;
+}
+
+#add-members-modal img {
+    height: 50px;
+    width: 50px;
+    vertical-align: middle;
+}
+
+#add-members-modal span {
+    font-size: 1rem;
+    margin-left: 1rem;
+}
+
+#add-members-modal .selected {
+    border-left: 3px solid #0061CF;
+    background-color: #2A2A2A;
+}
+
+#confirm-add-members {
+    margin-top: 0;
+}
