@@ -214,8 +214,12 @@ def dashboard():
             ),
 
             # Friend's bio or "No bio available" if not set
-            'bio': (friend.bio if friend and friend.bio else
-                    "No bio available"),
+            'bio': (
+                friend.bio if friend and friend.bio and
+                not friend.bio_is_private else "Private"
+                if friend and friend.bio_is_private
+                else "No bio available"
+            ),
 
             # Friend's birthdate or privacy status
             'birthdate': (friend.birthdate.strftime('%d %B %Y')
