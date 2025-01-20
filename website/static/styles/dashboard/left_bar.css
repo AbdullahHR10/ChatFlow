@@ -1,0 +1,34 @@
+.left-bar {
+    background-color: #0061CF;
+    width: 10rem;
+    height: 88vh;
+    margin-right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.left-bar img {
+    height: 32px;
+    width: 32px;
+}
+
+#user-image-container {
+    margin: 3rem 0 3rem 0;
+}
+
+#user-image {
+    border-radius: 50%;
+    height: 64px;
+    width: 64px;
+}
+
+.left-bar a {
+    margin-bottom: 3rem;
+    padding: 0.5rem 1rem;
+}
+
+#logout-button {
+    margin-top: auto;
+}
