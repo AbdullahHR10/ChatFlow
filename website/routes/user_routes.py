@@ -11,12 +11,13 @@ Routes:
             birthdate, and social media links.
 """
 
-from flask import (Blueprint, redirect,
+from flask import (Blueprint, redirect, flash,
                    url_for, jsonify, request, current_app)
 from flask_login import login_required, current_user
 
 from ..utils import allowed_file
 from website import db
+from website.models.user import User
 
 import os
 import datetime
@@ -146,16 +147,16 @@ def update_profile():
 
     # Handle updates for different fields
     # ensuring no leading/trailing whitespace
-    if field == 'username':
-        current_user.username = value.strip()
-        # Update the username
+    if field == 'name':
+        # Update the name
+        current_user.name = value.strip()
     elif field == 'bio':
         # Update the bio
         current_user.bio = value.strip()
     elif field == 'birthdate':
         # Validate and update the birthdate
         try:
-            value = datetime.strptime(value.strip(), "%Y-%m-%d").date()
+            value = datetime.datetime.strptime(value.strip(), "%Y-%m-%d").date()
             current_user.birthdate = value
         except ValueError:
             return jsonify({
@@ -197,3 +198,42 @@ def update_profile():
         return jsonify({'success': False, 'message': 'Invalid field'}), 400
     db.session.commit()
     return jsonify({'success': True})
+
+
+@user_routes_bp.route('/update-privacy-settings', methods=['POST'])
+def update_privacy_settings():
+    """
+    Updates user privacy settings.
+
+    Returns:
+        Redirects the user to the dashboard page.
+    """
+    # Get the current user
+    user = User.query.get(current_user.id)
+    
+    # List of privacy-related fields to update
+    privacy_fields = [
+        'phone_number_is_private',
+        'last_seen_is_private',
+        'bio_is_private',
+        'birthdate_is_private',
+        'location_is_private',
+        'job_title_is_private',
+        'allow_friend_requests'
+    ]
+    
+    # Update the privacy fields
+    for field in privacy_fields:
+        # Check if the field is in the form and handle checkbox status
+        value = request.form.get(field) == 'on'  # If it's 'on', set to True; otherwise False
+        setattr(user, field, value)
+    
+    try:
+        db.session.commit()  # Commit the changes to the database
+        flash("Privacy settings updated.", "success")
+    except Exception as e:
+        db.session.rollback()  # Rollback in case of error
+        flash("There was an error updating your privacy settings.", "danger")
+        print(f"Error: {e}")
+    
+    return redirect(url_for('main_routes_bp.dashboard'))
