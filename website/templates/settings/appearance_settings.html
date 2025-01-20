@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="appearance-settings-container">
+    <div class="settings-head">
+        <a href="#" id="back-to-settings">
+            <i class='bx bx-arrow-back setting-section-icon'></i>
+        </a>
+        <h2>Apperance settings</h2>
+    </div>
+    <div class="theme-selection">
+        <button class="theme-option" data-theme="light">
+            <img src="{{ url_for('static', filename='icons/light-preview.png') }}">
+        </button>
+        <button class="theme-option" data-theme="dark">
+            <img src="{{ url_for('static', filename='icons/dark-preview.png') }}">
+        </button>
+    </div>
+    
+    
+</section>
+
+
+{% endblock %}
