@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ChatFlow{% endblock %}</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/body.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/authentication.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/flash.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/modals.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/themes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/tooltips.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/common/responsive.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard/left_bar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard/middle_bar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard/right_bar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/notifications.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/friends.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/settings_sections/profile_settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/settings_sections/privacy_settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sections/settings_sections/appearance_settings.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icons/ChatFlow.png') }}">
+</head>
+<body>
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">
+                        {{ message }}
+                        <span class="closebtn" onclick="fadeOutAlert(this.parentElement)">×</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    {% block content %}{% endblock %}
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/services/load_group_chat_history.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/groups/add_member.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/common/modals.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/socket_events.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/authentication.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/private_chats/block.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/search.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/sections/friends.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/sections/notifications.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/private_chats/create_private_chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/private_chats/select_chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/private_chats/private_chat_menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/groups/select_group.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/settings/settings.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/settings/profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/settings/privacy.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/common/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/common/flash.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/services/load_friends.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/services/get_current_user_id.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/services/format_timestamp.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/services/load_chat_history.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/messages/send_message.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/messages/delete_message.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/messages/message_options.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/messages/mark_message_as_read.js') }}"></script>
+</body>
+</html>
