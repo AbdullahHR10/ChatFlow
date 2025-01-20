@@ -1,0 +1,26 @@
+.appearance-settings-container {
+    background-color: #313131;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 3px 3px #0061CF;
+}
+
+.theme-option {
+    border: none;
+    background-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.theme-option img {
+    height: 128px;
+    width: 128px;
+    pointer-events: none;
+}
+
+.theme-option:hover {
+    cursor: pointer;
+}
