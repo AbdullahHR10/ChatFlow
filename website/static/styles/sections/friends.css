@@ -1,0 +1,242 @@
+.friends-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.incoming-friend-requests-container, .outgoing-friend-requests-container   {
+    background-color: #313131;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 3px #0061CF;
+    margin-bottom: 3rem;
+}
+
+.incoming-friend-requests-container h3, .outgoing-friend-requests-container h3 {
+    margin: 1rem 0 0 1rem;
+}
+
+#add-friend-form {
+    background-color: transparent;
+    height: 3rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    color: white;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pending-requests li, .incoming-requests li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #8696A026;
+    width: 100%;
+    padding: 1rem 0 1rem 1rem;
+}
+
+.incoming-requests li:last-child {
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.incoming-friend-info p {
+    font-size: 1rem;
+}
+
+.incoming-requests-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.incoming-requests-buttons-container button {
+    background: none;
+    border: none;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#accept-button {
+    background-color: #0061CF;
+    color: white;
+    box-shadow: 0 0 5px #0061CF;
+}
+
+#accept-button:hover {
+    cursor: pointer;
+    background-color: #0044BC;
+    box-shadow: none;
+}
+
+#decline-button {
+    background-color: #D1D7DB;
+    color: #313131;
+    box-shadow: 0 0 5px #D1D7DB;
+    margin-left: 1rem;
+}
+
+#decline-button:hover {
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.pending-requests p {
+    font-size: 1rem;
+}
+
+.outgoing-friend-requests-list:hover {
+    background-color: #2C2C2C;
+    cursor: pointer;
+}
+
+.outgoing-friend-requests-list img {
+    height: 64px;
+    width: 64px;
+    vertical-align: middle;
+}
+
+.outgoing-friend-requests-container button {
+    background-color: transparent;
+    border: none;
+}
+
+#friend-cancel-button {
+    display: none;
+}
+
+.outgoing-friend-requests-container li:hover #friend-cancel-button {
+    display: block;
+}
+
+.outgoing-friend-requests-container button:hover {
+    cursor: pointer;
+}
+
+.outgoing-friend-requests-container input {
+    background-color: transparent;
+    height: 2rem;
+    width: 24rem;
+    padding: 0.5rem;
+    margin-left: 1rem;
+    border: none;
+    color: white
+}
+
+.outgoing-friend-requests-container p {
+    font-size: 1rem;
+}
+
+.outgoing-friend-requests-container input:focus {
+    outline: none;
+}
+
+#cancel-friend-form {
+    margin: 0 1rem 0 auto;
+}
+
+.friends-list {
+    background-color: #313131;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 3px #0061CF;
+}
+
+.friends-list h3 {
+    margin: 1rem 0 0 1rem;
+}
+
+.user-friends-item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #8696A026;
+    width: 100%;
+    padding: 1rem 0 1rem 1rem;
+}
+
+.user-friends-item:last-child {
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.friend-info {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.friend-name h4 {
+    font-size: 1rem;
+}
+
+.friend-name p {
+    font-size: 0.8rem;
+    color: #ABB0B7;
+    text-transform: capitalize;
+}
+
+#friend-profile-picture {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.user-friends-item-buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 1rem 0 auto;
+}
+
+.user-friends-item-buttons-container button {
+    border: none;
+    background-color: transparent;
+}
+
+.user-friends-item-buttons-container button:hover {
+    cursor: pointer;
+}
+
+.user-friends-item:hover {
+    background-color: #2C2C2C;
+    cursor: pointer;
+}
+
+.user-friends-item:hover .remove-icon {
+    display: block;
+}
+
+.status-circle {
+    position: absolute;
+    top: 2.7rem;
+    left: 2.7rem;
+    border: 3px solid #313131;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.status-circle.online {
+    background-color: #28a745;
+}
+
+.status-circle.offline {
+    background-color: #80848e;
+    border: 3px solid #313131;
+}
