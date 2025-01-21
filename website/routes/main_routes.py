@@ -332,7 +332,6 @@ def dashboard():
 
     # Render the dashboard page with the chat, group, user,
     # and notification data
-    print(private_chats)
     return render_template('dashboard.html',
                            private_chats=private_chats,
                            groups=groups,
