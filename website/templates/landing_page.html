@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ChatFlow</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/landing_page.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icons/ChatFlow.png') }}">
+  </head>
+  <body>
+    <div class="nav_bar">
+      <a href="#" id="home">Home</a>
+      <a href="#developer-info">Developer</a>
+      <a href="https://github.com/AbdullahHR10/ChatFlow" target="_blank">Github</a>
+      <a href="{{ url_for('authentication.login') }}" id="get-started">Get Started</a>
+    </div>
+    
+    <div class="hero-section">
+      <div class="hero-section-title">
+        <h1>Welcome to <span>ChatFlow</span></h1>
+        <h2>Building stronger connections and sparking conversations, <span>one message</span> at a time.</h2>
+      </div>
+    </div>
+
+    <div class="features-section">
+      <div class="private-chats">
+        <img src="{{ url_for('static', filename='icons/feature-private_chats.png') }}">
+        <h1>Private Chats</h1>
+        <p>Engage in smooth, real-time one-on-one conversations. Share messages, in a space built for personal and uninterrupted communication.</p>
+      </div>
+
+      <div class="groups">
+        <img src="{{ url_for('static', filename='icons/feature-groups.png') }}">
+        <h1>Groups</h1>
+        <p>Stay connected and collaborate effortlessly with group chats. Whether it’s for family, friends, or teams, ChatFlow makes group messaging simple and interactive.</p>
+      </div>
+
+      <div class="friend-list">
+        <img src="{{ url_for('static', filename='icons/feature-friends.png') }}">
+        <h1>Friend List</h1>
+        <p>Keep your connections close with an easy-to-use friend list. Quickly find and chat with your friends or discover new connections, all in one place.</p>
+      </div>
+    </div>
+
+    <div class="developer-info" id="developer-info">
+      <h1>Developer</h1>
+      <p>Hi, I'm Abdullah Hussein, a passionate coding enthusiast and graduate student at ALX. Coding has been a central part of my journey, and I take pride in the projects I've worked on, including <strong>ChatFlow</strong>. This project showcases my ability to build functional and impactful applications, reflecting my skills and dedication to the craft.</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/profile.php?id=61557152731160" target="_blank"><i class='bx bxl-facebook'></i></a>
+        <a href="https://github.com/AbdullahHR10" target="_blank"><i class='bx bxl-github'></i></a>
+        <a href="https://x.com/AbdullahHR20" target="_blank"><i class='bx bxl-twitter'></i></a>
+        <a href="https://www.linkedin.com/in/abdullah-hussein-061039280/" target="_blank"><i class='bx bxl-linkedin'></i></a>
+      </div>
+    </div>
+
+    <footer>
+       Copyright © 2025 ChatFlow, All rights reserved.
+    </footer>
+  </body>
+</html>
