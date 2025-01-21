@@ -1,0 +1,9 @@
+eventlet
+flask
+flask-socketio
+flask-sqlalchemy
+flask-migrate
+flask-login
+pytz
+werkzeug
+sqlalchemy
